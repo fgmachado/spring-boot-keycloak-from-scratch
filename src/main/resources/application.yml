@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: customer-api
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    generate-ddl: true
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:customer_api}
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USER:customer_api}
+    password: ${MYSQL_PASSWORD:customer_api}

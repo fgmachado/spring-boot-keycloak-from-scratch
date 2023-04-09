@@ -1,0 +1,48 @@
+version: '3.9'
+name: spring-boot-keycloak-from-scratch
+
+services:
+
+  customer-api-db:
+    container_name: customer-api-db
+    hostname: customer-api-db
+    image: mysql:${MYSQL_VERSION}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_CUSTOMER_API_DB_DATABASE}
+      MYSQL_USER: ${MYSQL_CUSTOMER_API_DB_USER}
+      MYSQL_PASSWORD: ${MYSQL_CUSTOMER_API_DB_PASSWORD}
+    expose:
+      - 3306
+    volumes:
+      - customer-api-db:/var/lib/mysql
+      - customer-api-db:/docker-entrypoint-initdb.d
+    networks:
+      - spring-boot-keycloak-from-scratch
+
+  customer-api:
+    container_name: customer-api
+    hostname: customer-api
+    depends_on:
+      - customer-api-db
+    build: .
+    environment:
+      MYSQL_HOST: customer-api-db
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ${MYSQL_CUSTOMER_API_DB_DATABASE}
+      MYSQL_USER: ${MYSQL_CUSTOMER_API_DB_USER}
+      MYSQL_PASSWORD: ${MYSQL_CUSTOMER_API_DB_PASSWORD}
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-boot-keycloak-from-scratch
+
+volumes:
+  keycloak-db-volume:
+    driver: local
+  customer-api-db:
+    driver: local
+
+networks:
+  spring-boot-keycloak-from-scratch:
+    driver: bridge
