@@ -42,7 +42,7 @@ services:
       - 8080
       - 8443
     ports:
-      - "8000:8080"
+      - "8091:8080"
       - "8443:8443"
     restart: unless-stopped
     command: start-dev --http-relative-path /
@@ -79,7 +79,7 @@ services:
       MYSQL_USER: ${MYSQL_CUSTOMER_API_DB_USER}
       MYSQL_PASSWORD: ${MYSQL_CUSTOMER_API_DB_PASSWORD}
     ports:
-      - "8080:8080"
+      - "8092:8080"
     networks:
       - spring-boot-keycloak-from-scratch
 
