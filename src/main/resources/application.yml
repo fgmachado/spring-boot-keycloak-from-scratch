@@ -9,3 +9,9 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     username: ${MYSQL_USER:customer_api}
     password: ${MYSQL_PASSWORD:customer_api}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8091/realms/udemy
